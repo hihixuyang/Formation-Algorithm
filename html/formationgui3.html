@@ -1,0 +1,337 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>formationgui3</title><meta name="generator" content="MATLAB 8.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-12-06"><meta name="DC.source" content="formationgui3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><pre class="codeinput">clc; clear <span class="string">all</span>; close <span class="string">all</span>;
+<span class="comment">%create figure</span>
+figure_h = figure;
+
+n=32;
+<span class="comment">%n = input('How many drones are in the system?');</span>
+
+<span class="comment">% Sets original size of network &amp; time delay</span>
+dim = n;
+
+<span class="comment">% Pulling position calculations</span>
+X = Nbots(n);
+I = X(:,6);
+
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% # of Nodes static text</span>
+uicontrol(<span class="string">'Style'</span>,<span class="string">'text'</span>,<span class="keyword">...</span>
+            <span class="string">'units'</span>,<span class="string">'normalized'</span>,<span class="keyword">...</span>
+            <span class="string">'position'</span>,[0.86 0.925 0.07 0.06],<span class="keyword">...</span>
+            <span class="string">'String'</span>,<span class="string">'# of Agents'</span>);
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% # of Graphs text appears when a "switching graph" is chosen from the</span>
+<span class="comment">%graph list</span>
+switch_text_h = uicontrol(<span class="string">'Style'</span>,<span class="string">'text'</span>,<span class="keyword">...</span>
+            <span class="string">'visible'</span>, <span class="string">'off'</span>,<span class="keyword">...</span>
+            <span class="string">'units'</span>,<span class="string">'normalized'</span>,<span class="keyword">...</span>
+            <span class="string">'position'</span>,[0.58 0.87 0.2 0.03],<span class="keyword">...</span>
+            <span class="string">'String'</span>,<span class="string">'# of Switching Graphs'</span>);
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% Makes  for tabledata</span>
+<span class="keyword">for</span> i=1:n
+    <span class="keyword">for</span> j=1:5
+        tabledata(i,j) = X(i,j);
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="comment">%tabledata = [x(1,1) y(1,1) 0 x(1,15) y(1,15); x(2,1) y(2,1) 0 x(2,15) y(2,15); x(3,1) y(3,1) 0 x(3,15) y(3,15); x(4,1) y(4,1) 0 x(4,15) y(4,15)];</span>
+tabledata_h = uitable(<span class="string">'visible'</span>, <span class="string">'off'</span>,<span class="keyword">...</span>
+                        <span class="string">'data'</span>, tabledata);
+
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% Makes handle for break point (for reset button)</span>
+break_h = uitable(<span class="string">'visible'</span>, <span class="string">'off'</span>);
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% Makes handle for adjacency matrix, which stores data in a uitable that is</span>
+<span class="comment">% invisible on the GUI.</span>
+A_h = uitable(<span class="string">'visible'</span>, <span class="string">'off'</span>);
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% Makes handle for history matrix. This data can be accessed in the</span>
+<span class="comment">% workspace.</span>
+H_h = uitable(<span class="string">'visible'</span>, <span class="string">'off'</span>);
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% Make editable control for number of switch graphs, which becomes visible</span>
+<span class="comment">% when a "switching graph" is chosen from the graph list.</span>
+switch_h = uicontrol(<span class="string">'style'</span>, <span class="string">'edit'</span>,<span class="keyword">...</span>
+                    <span class="string">'visible'</span>, <span class="string">'off'</span>,<span class="keyword">...</span>
+                    <span class="string">'units'</span>, <span class="string">'normalized'</span>,<span class="keyword">...</span>
+                    <span class="string">'position'</span>, [0.673 0.815 0.05 0.05]);
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% Make data table</span>
+table_h = uitable(<span class="string">'units'</span>, <span class="string">'normalized'</span>,<span class="keyword">...</span>
+                    <span class="string">'position'</span>, [0.66 0.41 0.33 0.38],<span class="keyword">...</span>
+                    <span class="string">'columnname'</span>, {<span class="string">'x'</span>, <span class="string">'y'</span>, <span class="string">'delay'</span>},<span class="keyword">...</span>
+                    <span class="string">'columnwidth'</span>, {50 50 50 50},<span class="keyword">...</span>
+                    <span class="string">'columneditable'</span>, [true, true, true],<span class="keyword">...</span>
+                    <span class="string">'data'</span>, get(tabledata_h,<span class="string">'data'</span>),<span class="keyword">...</span>
+                    <span class="string">'backgroundcolor'</span>, [0.7 0.8 0.9; 0.9 0.9608 0.4]);
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% Make editable control for number of switching graphs</span>
+offset_h = uicontrol(<span class="string">'style'</span>, <span class="string">'checkbox'</span>,<span class="keyword">...</span>
+                    <span class="string">'units'</span>, <span class="string">'normalized'</span>,<span class="keyword">...</span>
+                    <span class="string">'string'</span>, <span class="string">'Allow Offset'</span>,<span class="keyword">...</span>
+                    <span class="string">'position'</span>, [0.7 0.9 0.15 0.1],<span class="keyword">...</span>
+                    <span class="string">'callback'</span>, {@offset_input, tabledata_h, table_h});
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% Graph generator list</span>
+list_h = uicontrol(<span class="string">'style'</span>, <span class="string">'listbox'</span>,<span class="keyword">...</span>
+                <span class="string">'units'</span>,<span class="string">'normalized'</span>,<span class="keyword">...</span>
+                <span class="string">'position'</span>, [0.79 0.82 0.2 0.08],<span class="keyword">...</span>
+                <span class="string">'string'</span>, {<span class="string">'Cycle Graph'</span>; <span class="string">'Path Graph'</span>; <span class="string">'Switching Graph'</span>; <span class="string">'Custom'</span>},<span class="keyword">...</span>
+                <span class="string">'callback'</span>,{@operations, A_h, table_h, switch_h, switch_text_h, offset_h});
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% Set network size, passes handle to dim_table.m function to make table</span>
+<span class="comment">% size as desired.</span>
+network_size_h = uicontrol(<span class="string">'style'</span>, <span class="string">'edit'</span>,<span class="keyword">...</span>
+                        <span class="string">'units'</span>, <span class="string">'normalized'</span>,<span class="keyword">...</span>
+                        <span class="string">'position'</span>, [0.94 0.93 0.05 0.05],<span class="keyword">...</span>
+                        <span class="string">'string'</span>, dim,<span class="keyword">...</span>
+                        <span class="string">'callback'</span>, {@dim_table,table_h,offset_h});
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% Plot nodes, passes handle to plotting.m function</span>
+plot_h = uicontrol(<span class="string">'style'</span>, <span class="string">'pushbutton'</span>,<span class="keyword">...</span>
+                <span class="string">'string'</span>, <span class="string">'Plot Graph'</span>,<span class="keyword">...</span>
+                <span class="string">'units'</span>, <span class="string">'normalized'</span>,<span class="keyword">...</span>
+                <span class="string">'position'</span>, [0.79 0.32 0.2 0.08],<span class="keyword">...</span>
+                <span class="string">'callback'</span>, {@plotting, table_h, A_h, list_h, network_size_h});
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% Average nodes in discrete play mode, passes handle to collectiveavg.m fn</span>
+avg_h = uicontrol(<span class="string">'style'</span>, <span class="string">'pushbutton'</span>,<span class="keyword">...</span>
+        <span class="string">'string'</span>, <span class="string">'Average'</span>,<span class="keyword">...</span>
+        <span class="string">'units'</span>, <span class="string">'normalized'</span>,<span class="keyword">...</span>
+        <span class="string">'position'</span>, [0.79 0.24 0.2 0.08],<span class="keyword">...</span>
+        <span class="string">'callback'</span>, {@collectiveavg, table_h, A_h, H_h, list_h, break_h, switch_h, offset_h, network_size_h,n});
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% Reset button - resets to original tabledata value</span>
+reset_h = uicontrol(<span class="string">'style'</span>, <span class="string">'pushbutton'</span>,<span class="keyword">...</span>
+                <span class="string">'string'</span>, <span class="string">'Reset'</span>,<span class="keyword">...</span>
+                <span class="string">'units'</span>, <span class="string">'normalized'</span>,<span class="keyword">...</span>
+                <span class="string">'position'</span>, [0.79 0.08 0.2 0.08],<span class="keyword">...</span>
+                <span class="string">'callback'</span>, {@reset_data, table_h, tabledata_h, network_size_h, offset_h});
+
+<span class="comment">%--------------------------------------------------------------------------</span>
+<span class="comment">% Stop button - resets to original tabledata value</span>
+stop_h = uicontrol(<span class="string">'style'</span>, <span class="string">'pushbutton'</span>,<span class="keyword">...</span>
+                <span class="string">'string'</span>, <span class="string">'Stop'</span>,<span class="keyword">...</span>
+                <span class="string">'units'</span>, <span class="string">'normalized'</span>,<span class="keyword">...</span>
+                <span class="string">'position'</span>, [0.79 0.16 0.2 0.08],<span class="keyword">...</span>
+                <span class="string">'callback'</span>, {@stop, break_h});
+</pre><img vspace="5" hspace="5" src="formationgui3_01.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+
+clc; clear all; close all;
+%create figure
+figure_h = figure;
+
+n=32;
+%n = input('How many drones are in the system?');
+
+% Sets original size of network & time delay
+dim = n;
+
+% Pulling position calculations
+X = Nbots(n);
+I = X(:,6);
+
+
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% # of Nodes static text                    
+uicontrol('Style','text',...
+            'units','normalized',...
+            'position',[0.86 0.925 0.07 0.06],...
+            'String','# of Agents');
+
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% # of Graphs text appears when a "switching graph" is chosen from the
+%graph list
+switch_text_h = uicontrol('Style','text',...
+            'visible', 'off',...
+            'units','normalized',...
+            'position',[0.58 0.87 0.2 0.03],...
+            'String','# of Switching Graphs');
+        
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Makes  for tabledata
+for i=1:n
+    for j=1:5
+        tabledata(i,j) = X(i,j);
+    end
+end
+%tabledata = [x(1,1) y(1,1) 0 x(1,15) y(1,15); x(2,1) y(2,1) 0 x(2,15) y(2,15); x(3,1) y(3,1) 0 x(3,15) y(3,15); x(4,1) y(4,1) 0 x(4,15) y(4,15)];
+tabledata_h = uitable('visible', 'off',...
+                        'data', tabledata);
+
+
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Makes handle for break point (for reset button)
+break_h = uitable('visible', 'off');
+
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Makes handle for adjacency matrix, which stores data in a uitable that is
+% invisible on the GUI.
+A_h = uitable('visible', 'off');
+
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Makes handle for history matrix. This data can be accessed in the
+% workspace.
+H_h = uitable('visible', 'off');
+
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Make editable control for number of switch graphs, which becomes visible
+% when a "switching graph" is chosen from the graph list.
+switch_h = uicontrol('style', 'edit',...
+                    'visible', 'off',...
+                    'units', 'normalized',...
+                    'position', [0.673 0.815 0.05 0.05]); 
+                              
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Make data table
+table_h = uitable('units', 'normalized',...
+                    'position', [0.66 0.41 0.33 0.38],...
+                    'columnname', {'x', 'y', 'delay'},...
+                    'columnwidth', {50 50 50 50},...
+                    'columneditable', [true, true, true],...
+                    'data', get(tabledata_h,'data'),...
+                    'backgroundcolor', [0.7 0.8 0.9; 0.9 0.9608 0.4]);
+
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Make editable control for number of switching graphs
+offset_h = uicontrol('style', 'checkbox',...
+                    'units', 'normalized',...
+                    'string', 'Allow Offset',...
+                    'position', [0.7 0.9 0.15 0.1],...
+                    'callback', {@offset_input, tabledata_h, table_h}); 
+                
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH
+% Graph generator list
+list_h = uicontrol('style', 'listbox',...
+                'units','normalized',...
+                'position', [0.79 0.82 0.2 0.08],...
+                'string', {'Cycle Graph'; 'Path Graph'; 'Switching Graph'; 'Custom'},...
+                'callback',{@operations, A_h, table_h, switch_h, switch_text_h, offset_h});
+
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH              
+% Set network size, passes handle to dim_table.m function to make table
+% size as desired.
+network_size_h = uicontrol('style', 'edit',...
+                        'units', 'normalized',...
+                        'position', [0.94 0.93 0.05 0.05],...
+                        'string', dim,...
+                        'callback', {@dim_table,table_h,offset_h});                  
+
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH                    
+% Plot nodes, passes handle to plotting.m function
+plot_h = uicontrol('style', 'pushbutton',...
+                'string', 'Plot Graph',...
+                'units', 'normalized',...
+                'position', [0.79 0.32 0.2 0.08],...
+                'callback', {@plotting, table_h, A_h, list_h, network_size_h});
+ 
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH           
+% Average nodes in discrete play mode, passes handle to collectiveavg.m fn
+avg_h = uicontrol('style', 'pushbutton',...
+        'string', 'Average',...
+        'units', 'normalized',...
+        'position', [0.79 0.24 0.2 0.08],...
+        'callback', {@collectiveavg, table_h, A_h, H_h, list_h, break_h, switch_h, offset_h, network_size_h,n});
+
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH                    
+% Reset button - resets to original tabledata value
+reset_h = uicontrol('style', 'pushbutton',...
+                'string', 'Reset',...
+                'units', 'normalized',...
+                'position', [0.79 0.08 0.2 0.08],...
+                'callback', {@reset_data, table_h, tabledata_h, network_size_h, offset_h});
+
+%REPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASHREPLACE_WITH_DASH_DASH                    
+% Stop button - resets to original tabledata value
+stop_h = uicontrol('style', 'pushbutton',...
+                'string', 'Stop',...
+                'units', 'normalized',...
+                'position', [0.79 0.16 0.2 0.08],...
+                'callback', {@stop, break_h});                     
+
+
+##### SOURCE END #####
+--></body></html>

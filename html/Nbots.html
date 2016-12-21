@@ -1,0 +1,313 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Nbots</title><meta name="generator" content="MATLAB 8.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-12-06"><meta name="DC.source" content="Nbots.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">Initializing Desired formation</a></li><li><a href="#3">Creating 4 rings of radiun 3q, s.t q = [0x4] with evenly spaced offsets on each ring</a></li><li><a href="#4">Creating 2 Evenly distributed Concentric rings of radius R1 and R2 (OLD FORMATION)</a></li><li><a href="#5">Initializing Locations</a></li><li><a href="#6">Getting Distances</a></li><li><a href="#7">Finding and selecting A minimum</a></li><li><a href="#8">Creating Tabledata With Offset As Output Variable X</a></li></ul></div><pre class="codeinput"><span class="keyword">function</span> [ X ] = Nbots( n )
+</pre><h2>Initializing Desired formation<a name="2"></a></h2><pre class="codeinput">n=32
+POI = zeros([n 2]); <span class="comment">% Points of Intrest</span>
+X = zeros([n 2]); <span class="comment">% Initializing Tabledata</span>
+
+<span class="comment">%R1 = 0.15*n; % Inner Circle radius</span>
+<span class="comment">%R2 = 0.3*n; % Outer Circle radius</span>
+
+d = zeros([n 1]);
+I = zeros([n 1]); <span class="comment">% Index of All The Selcted Point of Interst location in POI</span>
+</pre><pre class="codeoutput">
+n =
+
+    32
+
+</pre><h2>Creating 4 rings of radiun 3q, s.t q = [0x4] with evenly spaced offsets on each ring<a name="3"></a></h2><pre class="codeinput">POI(1,1) = 0;
+POI(1,2) = 0;
+
+<span class="keyword">for</span> t = 2:7
+    POI(t,1) = 3*cos(t*((2*pi)/3));
+    POI(t,2) = 3*sin(t*((2*pi)/3));
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> t = 8:16
+    POI(t,1) = 6*cos(t*((2*pi)/9));
+    POI(t,2) = 6*sin(t*((2*pi)/9));
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> t = 17:34
+    POI(t,1) = 9*cos(t*((2*pi)/18));
+    POI(t,2) = 9*sin(t*((2*pi)/18));
+<span class="keyword">end</span>
+
+<span class="keyword">for</span> t = 34:n
+    POI(t,1) = 12*cos(t*((2*pi)/25));
+    POI(t,2) = 12*sin(t*((2*pi)/25));
+<span class="keyword">end</span>
+</pre><h2>Creating 2 Evenly distributed Concentric rings of radius R1 and R2 (OLD FORMATION)<a name="4"></a></h2><pre class="codeinput"><span class="comment">%for t = 1:(n/3)</span>
+ <span class="comment">%   POI(t,1) = R1*cos(t*((2*pi)/(n/3)));</span>
+  <span class="comment">%  POI(t,2) = R1*sin(t*((2*pi)/(n/3)));</span>
+<span class="comment">%end</span>
+
+<span class="comment">%for t = ((n/3)+1):(2*n/3)</span>
+ <span class="comment">%   POI(t,1) = R2*cos(t*((2*pi)/(n/3)));</span>
+  <span class="comment">%  POI(t,2) = R2*sin(t*((2*pi)/(n/3)));</span>
+<span class="comment">%end</span>
+
+<span class="comment">%for t = ((2*n/3)+1):n</span>
+ <span class="comment">%   POI(t,1) = R3*cos(t*((2*pi)/(n/3)));</span>
+  <span class="comment">%  POI(t,2) = R3*sin(t*((2*pi)/(n/3)));</span>
+<span class="comment">%end</span>
+
+
+figure(1);
+plot(POI(:,1),POI(:,2),<span class="string">'ro'</span>);
+title(<span class="string">'Formation Shape'</span>)
+xlabel(<span class="string">'X (m)'</span>)
+ylabel(<span class="string">'Y (m)'</span>)
+</pre><img vspace="5" hspace="5" src="Nbots_01.png" alt=""> <h2>Initializing Locations<a name="5"></a></h2><pre class="codeinput">a=10;
+b=-10;
+
+<span class="keyword">for</span> i = 1:n
+    <span class="keyword">for</span> j=1:2
+        Pos=(b-a)*rand(i,j)+a;
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+<span class="comment">%plot(Pos(:,1),Pos(:,2),'ro')</span>
+</pre><h2>Getting Distances<a name="6"></a></h2><pre class="codeinput">distance = zeros(n);
+<span class="keyword">for</span> j = 1:n
+    <span class="keyword">for</span> i = 1:n
+        distance(i,j) = sqrt(((Pos(j,1)-POI(i,1))^2)+(((Pos(j,2)-POI(i,2))^2)));
+    <span class="keyword">end</span>
+<span class="keyword">end</span>
+</pre><h2>Finding and selecting A minimum<a name="7"></a></h2><pre class="codeinput"><span class="keyword">for</span> i = 1:n
+    [d(i,1), I(i,1)] = min(distance(:,i));
+    distance(I(i,1),:) = 1000000;
+<span class="keyword">end</span>
+</pre><h2>Creating Tabledata With Offset As Output Variable X<a name="8"></a></h2><pre class="codeinput"><span class="keyword">for</span> i = 1:n
+    X(i,4) = POI(I(i,1),1);
+    X(i,5) = POI(I(i,1),2);
+    X(i,1) = Pos(i,1);
+    X(i,2) = Pos(i,2);
+    X(i,3) = 0;
+    X(i,6) = I(i,1);
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+ans =
+
+   -1.5471    9.7475         0   -1.5628    8.8633   23.0000
+    4.0339   -4.8319         0    4.5963   -3.8567    8.0000
+   -4.7220    1.6918         0   -5.6382    2.0521   13.0000
+   -8.5158   -2.8287         0   -8.4572   -3.0782   28.0000
+   -9.5643    1.8555         0   -8.4572    3.0782   26.0000
+    9.4869   -9.9536         0    8.4572   -3.0782   17.0000
+   -8.2546    1.5421         0   -9.0000    0.0000   27.0000
+    1.9902    8.0537         0    1.5628    8.8633   22.0000
+   -2.8597   -0.9697         0   -1.5000   -2.5981    5.0000
+   -6.3623    2.9517         0   -6.8944    5.7851   25.0000
+   -0.4401    4.1272         0   -1.5000    2.5981    7.0000
+    9.7953   -5.0968         0    9.0000   -0.0000   18.0000
+   -9.9866    2.9498         0   -5.6382   -2.0521   14.0000
+   -6.0670    8.0194         0   -4.5000    7.7942   24.0000
+   -4.1741    3.4635         0   -3.0000    5.1962   12.0000
+   -2.9378   -5.5812         0   -3.0000   -5.1962   15.0000
+   -0.5654    8.0404         0    1.0419    5.9088   11.0000
+    2.8767    3.4583         0    4.5963    3.8567   10.0000
+   -4.2872   -5.4531         0   -4.5000   -7.7942   30.0000
+   -9.0418    3.8559         0   -1.5000    2.5981    4.0000
+   -5.6492    6.2011         0         0         0    1.0000
+   -7.4170   -8.5185         0   -6.8944   -5.7851   29.0000
+   -9.9474   -1.3748         0   -1.5000   -2.5981    2.0000
+   -8.1085    5.8660         0    3.0000   -0.0000    3.0000
+   -0.7298    5.9864         0    4.5000    7.7942   21.0000
+   -8.7045    3.6782         0    3.0000   -0.0000    6.0000
+   -7.8107   -7.6938         0   -1.5628   -8.8633   31.0000
+   -1.4598   -4.3991         0    1.0419   -5.9088   16.0000
+   -0.7267   -0.5168         0    6.0000   -0.0000    9.0000
+   -0.5472    8.7394         0    6.8944    5.7851   20.0000
+   -4.1466    8.9089         0    8.4572    3.0782   19.0000
+    9.8722    1.2153         0    1.5628   -8.8633   32.0000
+
+</pre><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+function [ X ] = Nbots( n )
+
+%% Initializing Desired formation
+n=32
+POI = zeros([n 2]); % Points of Intrest
+X = zeros([n 2]); % Initializing Tabledata
+
+%R1 = 0.15*n; % Inner Circle radius
+%R2 = 0.3*n; % Outer Circle radius
+
+d = zeros([n 1]); 
+I = zeros([n 1]); % Index of All The Selcted Point of Interst location in POI 
+
+%% Creating 4 rings of radiun 3q, s.t q = [0x4] with evenly spaced offsets on each ring
+
+POI(1,1) = 0;
+POI(1,2) = 0;
+
+for t = 2:7
+    POI(t,1) = 3*cos(t*((2*pi)/3));
+    POI(t,2) = 3*sin(t*((2*pi)/3));
+end
+
+for t = 8:16
+    POI(t,1) = 6*cos(t*((2*pi)/9));
+    POI(t,2) = 6*sin(t*((2*pi)/9));
+end
+
+for t = 17:34
+    POI(t,1) = 9*cos(t*((2*pi)/18));
+    POI(t,2) = 9*sin(t*((2*pi)/18));
+end
+
+for t = 34:n
+    POI(t,1) = 12*cos(t*((2*pi)/25));
+    POI(t,2) = 12*sin(t*((2*pi)/25));
+end
+
+%% Creating 2 Evenly distributed Concentric rings of radius R1 and R2 (OLD FORMATION)
+
+%for t = 1:(n/3)
+ %   POI(t,1) = R1*cos(t*((2*pi)/(n/3)));
+  %  POI(t,2) = R1*sin(t*((2*pi)/(n/3)));
+%end
+
+%for t = ((n/3)+1):(2*n/3)
+ %   POI(t,1) = R2*cos(t*((2*pi)/(n/3)));
+  %  POI(t,2) = R2*sin(t*((2*pi)/(n/3)));
+%end
+
+%for t = ((2*n/3)+1):n
+ %   POI(t,1) = R3*cos(t*((2*pi)/(n/3)));
+  %  POI(t,2) = R3*sin(t*((2*pi)/(n/3)));
+%end
+
+
+figure(1);
+plot(POI(:,1),POI(:,2),'ro');
+title('Formation Shape')
+xlabel('X (m)')
+ylabel('Y (m)')
+
+
+%% Initializing Locations
+a=10;
+b=-10;
+
+for i = 1:n
+    for j=1:2
+        Pos=(b-a)*rand(i,j)+a;
+    end
+end
+%plot(Pos(:,1),Pos(:,2),'ro')
+
+%% Getting Distances
+distance = zeros(n);
+for j = 1:n
+    for i = 1:n
+        distance(i,j) = sqrt(((Pos(j,1)-POI(i,1))^2)+(((Pos(j,2)-POI(i,2))^2)));
+    end
+end
+
+%% Finding and selecting A minimum
+
+for i = 1:n
+    [d(i,1), I(i,1)] = min(distance(:,i));
+    distance(I(i,1),:) = 1000000;
+end
+
+
+%% Creating Tabledata With Offset As Output Variable X
+for i = 1:n
+    X(i,4) = POI(I(i,1),1);
+    X(i,5) = POI(I(i,1),2);
+    X(i,1) = Pos(i,1);
+    X(i,2) = Pos(i,2);
+    X(i,3) = 0;
+    X(i,6) = I(i,1);
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           
