@@ -1,0 +1,4 @@
+Read me
+The running algorithm that calculates proximities and information known between drones is "collectiveaverage.m" 
+The main GUI is "FormationGUI3.m"
+In the GUI allow offest and use less than 40 drones during initialization. 
