@@ -51,7 +51,6 @@ end
 for i = 1:dim
     for j = 1:dim
         if A(i,j) == 1
-            arrow([table_data(i,1),table_data(i,2)],[table_data(j,1),table_data(j,2)], 'facecolor', 'b', 'edgecolor', 'b', 'length', 6);
         end
     end
 end
